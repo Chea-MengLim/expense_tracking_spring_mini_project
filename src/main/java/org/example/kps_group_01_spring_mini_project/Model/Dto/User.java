@@ -5,32 +5,25 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
 public class User implements UserDetails {
-    Integer userId;
-    String email;
-    String password;
-    String profileImage;
-    private List<String> roles;
+    private UUID userId;
+    private String email;
+    private String password;
+    private String profileImage;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for(String role : roles){
-            authorities.add(new SimpleGrantedAuthority(role));
-        }
-        return authorities;
+        return null;
     }
-
 
     @Override
     public String getUsername() {return email;}
