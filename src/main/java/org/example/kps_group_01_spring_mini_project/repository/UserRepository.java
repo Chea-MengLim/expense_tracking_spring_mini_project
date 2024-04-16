@@ -3,7 +3,7 @@ package org.example.kps_group_01_spring_mini_project.repository;
 import org.apache.ibatis.annotations.*;
 import org.example.kps_group_01_spring_mini_project.config.UUIDTypeHandler;
 import org.example.kps_group_01_spring_mini_project.model.Otp;
-import org.example.kps_group_01_spring_mini_project.model.Request.UserRequest;
+import org.example.kps_group_01_spring_mini_project.model.dto.Request.UserRequest;
 import org.example.kps_group_01_spring_mini_project.model.User;
 
 import java.sql.Timestamp;

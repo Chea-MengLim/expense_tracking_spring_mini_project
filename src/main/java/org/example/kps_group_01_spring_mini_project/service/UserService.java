@@ -1,8 +1,8 @@
 package org.example.kps_group_01_spring_mini_project.service;
 
 import org.example.kps_group_01_spring_mini_project.model.Otp;
-import org.example.kps_group_01_spring_mini_project.model.Request.UserRequest;
-import org.example.kps_group_01_spring_mini_project.model.Response.UserResponse;
+import org.example.kps_group_01_spring_mini_project.model.dto.Request.UserRequest;
+import org.example.kps_group_01_spring_mini_project.model.dto.Response.UserResponse;
 import org.example.kps_group_01_spring_mini_project.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

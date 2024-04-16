@@ -35,22 +35,8 @@ public class EmailingService {
 
         Context context = new Context();
         context.setVariable("content", otp);
-//        context.
         String processedString = templateEngine.process("template", context);
         mimeMessageHelper.setText(processedString, true);
-
-//        if(request.isHTML()) {
-//            Context context = new Context();
-//            /*
-//            content is the variable defined in our HTML template within the div tag
-//            */
-//            context.setVariable("content", "gg");
-//            String processedString = templateEngine.process("template", context);
-//
-//            mimeMessageHelper.setText(processedString, true);
-//        } else {
-//            mimeMessageHelper.setText(request.getMessage(), false);
-//        }
 
         mailSender.send(mimeMessage);
     }

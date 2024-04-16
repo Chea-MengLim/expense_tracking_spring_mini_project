@@ -2,8 +2,8 @@ package org.example.kps_group_01_spring_mini_project.service;
 
 import jakarta.mail.MessagingException;
 import org.example.kps_group_01_spring_mini_project.model.Otp;
-import org.example.kps_group_01_spring_mini_project.model.Request.UserRequest;
-import org.example.kps_group_01_spring_mini_project.model.Response.UserResponse;
+import org.example.kps_group_01_spring_mini_project.model.dto.Request.UserRequest;
+import org.example.kps_group_01_spring_mini_project.model.dto.Response.UserResponse;
 import org.example.kps_group_01_spring_mini_project.model.User;
 import org.example.kps_group_01_spring_mini_project.repository.UserRepository;
 import org.example.kps_group_01_spring_mini_project.util.OtpUtil;
@@ -42,20 +42,24 @@ public class UserServiceImplement implements UserService {
 
     @Override
     public UserResponse register(UserRequest userRequest) {
-        String otp = otpUtil.generateOtp();
-        userRequest.setPassword(bCryptPasswordEncoder.encode(
-                userRequest.getPassword()
-        ));
-        User user = userRepository.register(userRequest);
-        handleUserId = user.getUserId();
-        System.out.println("here is user id " + user.getUserId());
-        try {
-            userRepository.insertUserOtp(otp, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf("2024-04-14 21:58:58.000000"), false, user.getUserId());
-            emailingService.sendMail(user.getEmail(), otp);
-        } catch (MessagingException e) {
-            throw new RuntimeException("Unable to send OTP code.");
+        //check if password and confirm password match
+        if (userRequest.getPassword().equals(userRequest.getConfirmPassword())) {
+            String otp = otpUtil.generateOtp();
+            userRequest.setPassword(bCryptPasswordEncoder.encode(
+                    userRequest.getPassword()
+            ));
+            User user = userRepository.register(userRequest);
+            handleUserId = user.getUserId();
+            try {
+                userRepository.insertUserOtp(otp, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf("2024-04-14 21:58:58.000000"), false, user.getUserId());
+                emailingService.sendMail(user.getEmail(), otp);
+            } catch (MessagingException e) {
+                throw new RuntimeException("Unable to send OTP code.");
+            }
+            return modelMapper.map(userRepository.findByEmail(user.getEmail()), UserResponse.class);
         }
-        return modelMapper.map(userRepository.findByEmail(user.getEmail()), UserResponse.class);
+        //change it to responeEntity
+        return new UserResponse();
     }
 
     @Override
