@@ -1,4 +1,4 @@
-package org.example.kps_group_01_spring_mini_project.Config;
+package org.example.kps_group_01_spring_mini_project.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

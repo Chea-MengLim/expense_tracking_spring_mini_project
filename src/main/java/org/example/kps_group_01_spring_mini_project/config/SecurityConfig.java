@@ -1,8 +1,8 @@
-package org.example.kps_group_01_spring_mini_project.Config;
+package org.example.kps_group_01_spring_mini_project.config;
 
 import lombok.AllArgsConstructor;
-import org.example.kps_group_01_spring_mini_project.Jwt.JwtAuthEntrypoint;
-import org.example.kps_group_01_spring_mini_project.Jwt.JwtAuthFilter;
+import org.example.kps_group_01_spring_mini_project.jwt.JwtAuthEntrypoint;
+import org.example.kps_group_01_spring_mini_project.jwt.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,4 +1,4 @@
-package org.example.kps_group_01_spring_mini_project.Service;
+package org.example.kps_group_01_spring_mini_project.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

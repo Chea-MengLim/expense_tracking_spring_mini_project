@@ -1,4 +1,4 @@
-package org.example.kps_group_01_spring_mini_project.Jwt;
+package org.example.kps_group_01_spring_mini_project.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

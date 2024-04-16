@@ -1,4 +1,4 @@
-package org.example.kps_group_01_spring_mini_project.Model.Dto.Request;
+package org.example.kps_group_01_spring_mini_project.model.Request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

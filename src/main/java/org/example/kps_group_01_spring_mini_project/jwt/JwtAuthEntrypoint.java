@@ -1,4 +1,4 @@
-package org.example.kps_group_01_spring_mini_project.Jwt;
+package org.example.kps_group_01_spring_mini_project.jwt;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,14 +1,13 @@
-package org.example.kps_group_01_spring_mini_project.Controller;
+package org.example.kps_group_01_spring_mini_project.controller;
 
 import org.apache.coyote.BadRequestException;
-import org.apache.ibatis.javassist.NotFoundException;
-import org.example.kps_group_01_spring_mini_project.Jwt.JwtService;
-import org.example.kps_group_01_spring_mini_project.Model.Dto.Otp;
-import org.example.kps_group_01_spring_mini_project.Model.Dto.Request.AuthRequest;
-import org.example.kps_group_01_spring_mini_project.Model.Dto.Request.UserRequest;
-import org.example.kps_group_01_spring_mini_project.Model.Dto.Response.AuthResponse;
-import org.example.kps_group_01_spring_mini_project.Model.Dto.User;
-import org.example.kps_group_01_spring_mini_project.Service.UserService;
+import org.example.kps_group_01_spring_mini_project.jwt.JwtService;
+import org.example.kps_group_01_spring_mini_project.model.Otp;
+import org.example.kps_group_01_spring_mini_project.model.Request.AuthRequest;
+import org.example.kps_group_01_spring_mini_project.model.Request.UserRequest;
+import org.example.kps_group_01_spring_mini_project.model.Response.AuthResponse;
+import org.example.kps_group_01_spring_mini_project.model.User;
+import org.example.kps_group_01_spring_mini_project.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

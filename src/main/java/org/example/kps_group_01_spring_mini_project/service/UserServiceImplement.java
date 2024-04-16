@@ -1,12 +1,12 @@
-package org.example.kps_group_01_spring_mini_project.Service;
+package org.example.kps_group_01_spring_mini_project.service;
 
 import jakarta.mail.MessagingException;
-import org.example.kps_group_01_spring_mini_project.Model.Dto.Otp;
-import org.example.kps_group_01_spring_mini_project.Model.Dto.Request.UserRequest;
-import org.example.kps_group_01_spring_mini_project.Model.Dto.Response.UserResponse;
-import org.example.kps_group_01_spring_mini_project.Model.Dto.User;
-import org.example.kps_group_01_spring_mini_project.Repository.UserRepository;
-import org.example.kps_group_01_spring_mini_project.Util.OtpUtil;
+import org.example.kps_group_01_spring_mini_project.model.Otp;
+import org.example.kps_group_01_spring_mini_project.model.Request.UserRequest;
+import org.example.kps_group_01_spring_mini_project.model.Response.UserResponse;
+import org.example.kps_group_01_spring_mini_project.model.User;
+import org.example.kps_group_01_spring_mini_project.repository.UserRepository;
+import org.example.kps_group_01_spring_mini_project.util.OtpUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

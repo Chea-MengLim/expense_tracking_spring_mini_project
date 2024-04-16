@@ -1,4 +1,4 @@
-package org.example.kps_group_01_spring_mini_project.Model.Dto;
+package org.example.kps_group_01_spring_mini_project.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

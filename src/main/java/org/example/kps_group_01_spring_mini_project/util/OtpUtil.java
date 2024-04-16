@@ -1,4 +1,4 @@
-package org.example.kps_group_01_spring_mini_project.Util;
+package org.example.kps_group_01_spring_mini_project.util;
 
 import org.springframework.stereotype.Component;
 

@@ -1,13 +1,16 @@
-package org.example.kps_group_01_spring_mini_project.Model.Dto.Request;
+package org.example.kps_group_01_spring_mini_project.model.Response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class UserRequest {
+@NoArgsConstructor
+public class UserResponse {
+    UUID userId;
     String email;
     String password;
     String profileImage;
