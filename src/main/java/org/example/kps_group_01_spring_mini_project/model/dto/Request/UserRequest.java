@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class UserRequest {
     String email;
     String password;
+    String confirmPassword;
     String profileImage;
 }
