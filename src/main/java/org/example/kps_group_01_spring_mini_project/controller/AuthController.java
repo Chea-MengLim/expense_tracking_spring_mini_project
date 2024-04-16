@@ -1,5 +1,6 @@
 package org.example.kps_group_01_spring_mini_project.controller;
 
+import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
 import org.example.kps_group_01_spring_mini_project.jwt.JwtService;
 import org.example.kps_group_01_spring_mini_project.model.Otp;
@@ -47,7 +48,7 @@ public class AuthController {
             throw new Exception("INVALID_CREDENTIALS", e);}}
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticate(@RequestBody AuthRequest authRequest) throws Exception {
+    public ResponseEntity<?> authenticate(@RequestBody @Valid AuthRequest authRequest) throws Exception {
         authenticate(authRequest.getEmail(), authRequest.getPassword());
         final UserDetails userDetails = userService.loadUserByUsername(authRequest.getEmail());
         final String token = jwtService.generateToken(userDetails);
@@ -65,15 +66,15 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserRequest userRequest) {
+    public ResponseEntity<?> register(@RequestBody @Valid UserRequest userRequest) {
         return ResponseEntity.ok(userService.register(userRequest));
     }
-//
+
     @PutMapping("/verify")
     public ResponseEntity<String> verifyAccount(@RequestParam String otp) {
         return new ResponseEntity<>(userService.verify(otp), HttpStatus.OK);
     }
-//
+
     @PostMapping("/resend")
     public ResponseEntity<String> resendOtp(@RequestParam String email) {
         return new ResponseEntity<>(userService.resend(email), HttpStatus.OK);
