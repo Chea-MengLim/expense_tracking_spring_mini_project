@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -13,5 +14,5 @@ public class ExpenseRequest {
     private Integer amount;
     private String description;
     private LocalDateTime date;
-    private Integer category_id;
+    private UUID category_id;
 }
