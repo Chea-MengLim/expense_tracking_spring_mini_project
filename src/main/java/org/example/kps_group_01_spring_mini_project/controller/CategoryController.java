@@ -1,11 +1,10 @@
 package org.example.kps_group_01_spring_mini_project.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.example.kps_group_01_spring_mini_project.model.Category;
-import org.example.kps_group_01_spring_mini_project.model.apiresponse.APIResponse;
+import org.example.kps_group_01_spring_mini_project.model.response.APIResponse;
 import org.example.kps_group_01_spring_mini_project.model.dto.request.CategoryRequest;
 import org.example.kps_group_01_spring_mini_project.service.CategoryService;
 import org.springframework.http.HttpStatus;
@@ -14,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/categories")
 @AllArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class CategoryController {
 
     private final CategoryService categoryService;

@@ -1,4 +1,4 @@
-package org.example.kps_group_01_spring_mini_project.model.dto.Request;
+package org.example.kps_group_01_spring_mini_project.model.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 

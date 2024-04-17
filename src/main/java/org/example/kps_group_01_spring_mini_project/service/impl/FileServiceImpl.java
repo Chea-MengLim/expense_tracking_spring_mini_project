@@ -1,5 +1,7 @@
 package org.example.kps_group_01_spring_mini_project.service.impl;
 
+import org.example.kps_group_01_spring_mini_project.exception.BadRequestException;
+import org.example.kps_group_01_spring_mini_project.exception.NotFoundException;
 import org.example.kps_group_01_spring_mini_project.service.FileService;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
@@ -21,16 +23,12 @@ public class FileServiceImpl implements FileService {
         String fileName = file.getOriginalFilename();
         String type = file.getContentType();
         assert fileName != null;
+        assert type!= null;
 
         switch (type) {
             case "image/png":
             case "image/jpg":
             case "image/jpeg":
-            case "application/pdf":
-            case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-            case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-            case "video/mp4":
-            case "video/mpeg":
                 fileName = UUID.randomUUID() + "." + StringUtils.getFilenameExtension(fileName);
                 if (!Files.exists(path)) {
                     Files.createDirectories(path);
@@ -38,16 +36,22 @@ public class FileServiceImpl implements FileService {
                 Files.copy(file.getInputStream(), path.resolve(fileName));
                 break;
             default:
-                return "File format not supported";
+               throw new BadRequestException("File must be contain ");
 
         }
         return fileName;
     }
     @Override
     public ByteArrayResource getFileByFileName(String fileName) throws IOException {
+        if (!fileName.endsWith(".jpg") && !fileName.endsWith(".jpeg") && !fileName.endsWith(".png")){
+            throw new BadRequestException("File must be contain jpg, png, jpeg");
+        }
         //get file path
         Path path = Paths.get("src/main/resources/files/" + fileName);
-        //read file as byte
+        if (!path.toFile().isFile()) {
+            throw new NotFoundException("File not founded");
+        }
+
         return new ByteArrayResource(Files.readAllBytes(path));
     }
 }

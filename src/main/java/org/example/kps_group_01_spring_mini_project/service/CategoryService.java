@@ -5,11 +5,10 @@ import org.example.kps_group_01_spring_mini_project.model.Category;
 import org.example.kps_group_01_spring_mini_project.model.dto.request.CategoryRequest;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface CategoryService {
 
-    List<Category> findAllCategories(Integer offset, Integer limit);
+    List<Category> findAllCategories(Integer page, Integer limit);
 
     Category findCategoryById(String id);
 

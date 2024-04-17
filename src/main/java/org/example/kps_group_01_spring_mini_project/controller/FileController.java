@@ -1,7 +1,7 @@
 package org.example.kps_group_01_spring_mini_project.controller;
 
 import lombok.AllArgsConstructor;
-import org.example.kps_group_01_spring_mini_project.model.FileResponse;
+import org.example.kps_group_01_spring_mini_project.model.dto.response.FileResponse;
 import org.example.kps_group_01_spring_mini_project.service.FileService;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;

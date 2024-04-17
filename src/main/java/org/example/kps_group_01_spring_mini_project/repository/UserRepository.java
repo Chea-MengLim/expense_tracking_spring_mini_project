@@ -3,12 +3,11 @@ package org.example.kps_group_01_spring_mini_project.repository;
 import org.apache.ibatis.annotations.*;
 import org.example.kps_group_01_spring_mini_project.config.UUIDTypeHandler;
 import org.example.kps_group_01_spring_mini_project.model.Otp;
-import org.example.kps_group_01_spring_mini_project.model.dto.Request.ForgetPasswordRequest;
-import org.example.kps_group_01_spring_mini_project.model.dto.Request.UserRequest;
+import org.example.kps_group_01_spring_mini_project.model.dto.request.ForgetPasswordRequest;
+import org.example.kps_group_01_spring_mini_project.model.dto.request.UserRequest;
 import org.example.kps_group_01_spring_mini_project.model.User;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
