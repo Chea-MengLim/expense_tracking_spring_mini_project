@@ -19,13 +19,17 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<Category> findAllCategories() {
-        List<Category> allCategory = categoryRepository.findAllCategories();
+    public List<Category> findAllCategories(Integer offset, Integer limit) {
+        offset = (offset - 1)*limit;
+        List<Category> allCategory = categoryRepository.findAllCategories(offset, limit);
         return allCategory;
     }
 
     @Override
     public Category findCategoryById(String id) {
+        if (id == null || id.isEmpty()) {
+            throw new BadRequestException("Invalid category id.");
+        }
         Category category;
         try{
             category = categoryRepository.findCategoryById(id);
@@ -44,8 +48,6 @@ public class CategoryServiceImpl implements CategoryService {
             throw new BadRequestException("Category's name is blank...");
         } else if (categoryRequest.getDescription().isBlank()) {
             throw new BadRequestException("Category's description is blank...");
-        } else if (categoryRequest.getUserId().isBlank()) {
-            throw new BadRequestException("User id is blank...");
         }
         return categoryRepository.register(categoryRequest);
     }
@@ -63,4 +65,5 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return "Remove fail...";
     }
+
 }
