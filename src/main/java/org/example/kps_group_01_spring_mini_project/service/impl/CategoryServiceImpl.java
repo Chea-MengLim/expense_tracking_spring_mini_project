@@ -17,9 +17,11 @@ import java.util.UUID;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
-
     @Override
     public List<Category> findAllCategories(Integer offset, Integer limit) {
+        if (offset <= 0 || limit <= 0) {
+            throw new BadRequestException("Offset and limit must be greater than 0.");
+        }
         offset = (offset - 1)*limit;
         List<Category> allCategory = categoryRepository.findAllCategories(offset, limit);
         return allCategory;
