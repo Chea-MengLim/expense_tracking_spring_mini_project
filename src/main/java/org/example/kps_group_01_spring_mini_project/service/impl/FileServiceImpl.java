@@ -43,12 +43,15 @@ public class FileServiceImpl implements FileService {
     }
     @Override
     public ByteArrayResource getFileByFileName(String fileName) throws IOException {
+
+        if (!fileName.endsWith(".jpg") && !fileName.endsWith(".jpeg") && !fileName.endsWith(".png")){
+            throw new FileBadRequestException("File must be contain jpg, png, jpeg");
+        }
         //get file path
         Path path = Paths.get("src/main/resources/files/" + fileName);
         if (!path.toFile().isFile()) {
             throw new FileNotFoundException("File not founded");
         }
-
         //read file as byte
         return new ByteArrayResource(Files.readAllBytes(path));
     }

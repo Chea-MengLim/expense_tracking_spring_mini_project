@@ -32,7 +32,7 @@ public class FileController {
         ByteArrayResource resource = fileService.getFileByFileName(fileName);
         MediaType mediaType;
         if (fileName.endsWith(".pdf")){mediaType = MediaType.APPLICATION_PDF;}
-        else if(fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png") || fileName.endsWith(".gif")){
+        else if(fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png")){
             mediaType = MediaType.IMAGE_PNG;}
         else {mediaType = MediaType.APPLICATION_OCTET_STREAM;}
         return ResponseEntity.ok()
