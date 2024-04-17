@@ -13,8 +13,8 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalException {
-    @ExceptionHandler(NotFoundException.class)
-    public ProblemDetail handleNotFoundException(NotFoundException ex){
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ProblemDetail handleNotFoundException(CategoryNotFoundException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
                 HttpStatus.NOT_FOUND,
                 ex.getMessage()
@@ -24,8 +24,8 @@ public class GlobalException {
         return problemDetail;
     }
 
-    @ExceptionHandler(BadRequestException.class)
-    public ProblemDetail handleBadRequestException(BadRequestException ex){
+    @ExceptionHandler(CategoryBadRequestException.class)
+    public ProblemDetail handleBadRequestException(CategoryBadRequestException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
                 HttpStatus.BAD_REQUEST,
                 ex.getMessage()
@@ -36,25 +36,39 @@ public class GlobalException {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ProblemDetail handleMethodArgumentNotValidException(MethodArgumentNotValidException ex){
+    public ProblemDetail handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
 
         ex.getBindingResult().getFieldErrors().forEach(fieldError -> errors.put(fieldError.getField(), fieldError.getDefaultMessage()));
 
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setProperty("type", "about:blank");
         problemDetail.setTitle("Bad Request");
+        problemDetail.setProperty("status", 400);
+        problemDetail.setProperty("detail", ex.getMessage());
 
         problemDetail.setProperty("Errors", errors);
         return problemDetail;
     }
 
+    @ExceptionHandler(FileNotFoundException.class)
+    public ProblemDetail handleNotFoundException(FileNotFoundException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problemDetail.setProperty("type", "about:blank");
+        problemDetail.setTitle("Not Found");
+        problemDetail.setProperty("status", 404);
+        problemDetail.setProperty("detail", e.getMessage());
+
+         return problemDetail;
+    }
+
     @ExceptionHandler(HandlerMethodValidationException.class)
-    public ProblemDetail handlerMethodValidationException(HandlerMethodValidationException ex){
+    public ProblemDetail handlerMethodValidationException(HandlerMethodValidationException ex) {
         Map<String, String> errors = new HashMap<>();
 
-        for (var parameterError : ex.getAllValidationResults()){
+        for (var parameterError : ex.getAllValidationResults()) {
             String parameterName = parameterError.getMethodParameter().getParameterName();
-            for (var error : parameterError.getResolvableErrors()){
+            for (var error : parameterError.getResolvableErrors()) {
                 errors.put(parameterName, error.getDefaultMessage());
             }
         }

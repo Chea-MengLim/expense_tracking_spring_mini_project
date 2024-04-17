@@ -1,7 +1,7 @@
 package org.example.kps_group_01_spring_mini_project.controller;
 
-import lombok.AllArgsConstructor;
-import org.example.kps_group_01_spring_mini_project.model.dto.response.FileResponse;
+import lombok.RequiredArgsConstructor;
+import org.example.kps_group_01_spring_mini_project.model.response.FileResponse;
 import org.example.kps_group_01_spring_mini_project.service.FileService;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -14,11 +14,11 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("api/v1/files")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class FileController {
     private final FileService fileService;
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/upload" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public FileResponse uploadFile(@RequestParam MultipartFile file) throws IOException {
         FileResponse fileResponse;
         String fileName = fileService.saveFile(file);

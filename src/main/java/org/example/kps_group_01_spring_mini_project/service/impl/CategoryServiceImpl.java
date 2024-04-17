@@ -1,8 +1,8 @@
 package org.example.kps_group_01_spring_mini_project.service.impl;
 
 import lombok.AllArgsConstructor;
-import org.example.kps_group_01_spring_mini_project.exception.BadRequestException;
-import org.example.kps_group_01_spring_mini_project.exception.NotFoundException;
+import org.example.kps_group_01_spring_mini_project.exception.FileBadRequestException;
+import org.example.kps_group_01_spring_mini_project.exception.CategoryNotFoundException;
 import org.example.kps_group_01_spring_mini_project.model.Category;
 import org.example.kps_group_01_spring_mini_project.model.dto.request.CategoryRequest;
 import org.example.kps_group_01_spring_mini_project.repository.CategoryRepository;
@@ -10,7 +10,6 @@ import org.example.kps_group_01_spring_mini_project.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -30,9 +29,9 @@ public class CategoryServiceImpl implements CategoryService {
         try{
             category = categoryRepository.findCategoryById(id);
             if(category == null){
-                throw new NotFoundException("Find category with id "+ id + " is not found.");
+                throw new CategoryNotFoundException("Find category with id "+ id + " is not found.");
             }
-        }catch (NotFoundException e){
+        }catch (CategoryNotFoundException e){
             throw e;
         }
         return category;
@@ -41,11 +40,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category register(CategoryRequest categoryRequest) {
         if (categoryRequest.getName().isBlank()){
-            throw new BadRequestException("Category's name is blank...");
+            throw new FileBadRequestException("Category's name is blank...");
         } else if (categoryRequest.getDescription().isBlank()) {
-            throw new BadRequestException("Category's description is blank...");
+            throw new FileBadRequestException("Category's description is blank...");
         } else if (categoryRequest.getUserId().isBlank()) {
-            throw new BadRequestException("User id is blank...");
+            throw new FileBadRequestException("User id is blank...");
         }
         return categoryRepository.register(categoryRequest);
     }
