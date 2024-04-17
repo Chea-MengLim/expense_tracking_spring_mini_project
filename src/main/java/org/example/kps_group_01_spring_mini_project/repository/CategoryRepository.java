@@ -1,10 +1,12 @@
 package org.example.kps_group_01_spring_mini_project.repository;
 
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.type.MappedTypes;
 import org.example.kps_group_01_spring_mini_project.model.Category;
 import org.example.kps_group_01_spring_mini_project.model.dto.request.CategoryRequest;
 
 import java.util.List;
+import java.util.UUID;
 
 @Mapper
 public interface CategoryRepository {
@@ -25,7 +27,7 @@ public interface CategoryRepository {
     Category findCategoryById(@Param("id") String id);
 
     @Select("""
-            INSERT INTO categories (name, description, user_id) VALUES (#{cate.name}, #{cate.description}, #{userId}::uuid) RETURNING *
+            INSERT INTO categories (name, description, user_id) VALUES (#{cate.name}, #{cate.description}, #{cate.userId}::uuid) RETURNING *
             """)
     @ResultMap("cateMapper")
     Category register(@Param("cate") CategoryRequest categoryRequest, String userId);
