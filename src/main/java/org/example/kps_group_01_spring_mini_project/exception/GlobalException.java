@@ -65,4 +65,5 @@ public class GlobalException {
         problemDetail.setProperty("Errors", errors);
         return problemDetail;
     }
+
 }
