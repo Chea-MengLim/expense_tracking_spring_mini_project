@@ -7,8 +7,6 @@ import org.example.kps_group_01_spring_mini_project.model.Category;
 import org.example.kps_group_01_spring_mini_project.model.dto.request.CategoryRequest;
 import org.example.kps_group_01_spring_mini_project.repository.CategoryRepository;
 import org.example.kps_group_01_spring_mini_project.service.CategoryService;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,17 +19,13 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<Category> findAllCategories(Integer offset, Integer limit) {
-        offset = (offset - 1)*limit;
-        List<Category> allCategory = categoryRepository.findAllCategories(offset, limit);
+    public List<Category> findAllCategories() {
+        List<Category> allCategory = categoryRepository.findAllCategories();
         return allCategory;
     }
 
     @Override
     public Category findCategoryById(String id) {
-        if (id == null || id.isEmpty()) {
-            throw new BadRequestException("Invalid category id.");
-        }
         Category category;
         try{
             category = categoryRepository.findCategoryById(id);
@@ -46,13 +40,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category register(CategoryRequest categoryRequest) {
-        String userId = getUserIdOfCurrentUser();
         if (categoryRequest.getName().isBlank()){
             throw new BadRequestException("Category's name is blank...");
         } else if (categoryRequest.getDescription().isBlank()) {
             throw new BadRequestException("Category's description is blank...");
+        } else if (categoryRequest.getUserId().isBlank()) {
+            throw new BadRequestException("User id is blank...");
         }
-        return categoryRepository.register(categoryRequest, userId);
+        return categoryRepository.register(categoryRequest);
     }
 
     @Override
@@ -68,13 +63,4 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return "Remove fail...";
     }
-
-    String getUserIdOfCurrentUser() {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        String userId = userDetails.getAuthorities().toString();
-        System.out.println(userId);
-        return userId;
-    }
-
 }
