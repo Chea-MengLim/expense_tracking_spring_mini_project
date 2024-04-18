@@ -13,6 +13,40 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalException {
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ProblemDetail handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        ex.getBindingResult().getFieldErrors().forEach(fieldError -> errors.put(fieldError.getField(), fieldError.getDefaultMessage()));
+
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setProperty("type", "about:blank");
+        problemDetail.setTitle("Bad Request");
+        problemDetail.setProperty("status", 400);
+        problemDetail.setProperty("detail", ex.getMessage());
+
+        problemDetail.setProperty("Errors", errors);
+        return problemDetail;
+    }
+
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public ProblemDetail handlerMethodValidationException(HandlerMethodValidationException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        for (var parameterError : ex.getAllValidationResults()) {
+            String parameterName = parameterError.getMethodParameter().getParameterName();
+            for (var error : parameterError.getResolvableErrors()) {
+                errors.put(parameterName, error.getDefaultMessage());
+            }
+        }
+
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setTitle("Bad Request");
+        problemDetail.setProperty("Errors", errors);
+        return problemDetail;
+    }
+
     @ExceptionHandler(CategoryNotFoundException.class)
     public ProblemDetail handleNotFoundException(CategoryNotFoundException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
@@ -35,22 +69,6 @@ public class GlobalException {
         return problemDetail;
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ProblemDetail handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-
-        ex.getBindingResult().getFieldErrors().forEach(fieldError -> errors.put(fieldError.getField(), fieldError.getDefaultMessage()));
-
-        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
-        problemDetail.setProperty("type", "about:blank");
-        problemDetail.setTitle("Bad Request");
-        problemDetail.setProperty("status", 400);
-        problemDetail.setProperty("detail", ex.getMessage());
-
-        problemDetail.setProperty("Errors", errors);
-        return problemDetail;
-    }
-
     @ExceptionHandler(FileNotFoundException.class)
     public ProblemDetail handleNotFoundException(FileNotFoundException e) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
@@ -59,23 +77,17 @@ public class GlobalException {
         problemDetail.setProperty("status", 404);
         problemDetail.setProperty("detail", e.getMessage());
 
-         return problemDetail;
+        return problemDetail;
     }
 
-    @ExceptionHandler(HandlerMethodValidationException.class)
-    public ProblemDetail handlerMethodValidationException(HandlerMethodValidationException ex) {
-        Map<String, String> errors = new HashMap<>();
-
-        for (var parameterError : ex.getAllValidationResults()) {
-            String parameterName = parameterError.getMethodParameter().getParameterName();
-            for (var error : parameterError.getResolvableErrors()) {
-                errors.put(parameterName, error.getDefaultMessage());
-            }
-        }
-
-        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(FileBadRequestException.class)
+    public ProblemDetail handleNotFoundException(FileBadRequestException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problemDetail.setProperty("type", "about:blank");
         problemDetail.setTitle("Bad Request");
-        problemDetail.setProperty("Errors", errors);
+        problemDetail.setProperty("status", 400);
+        problemDetail.setProperty("detail", e.getMessage());
+
         return problemDetail;
     }
 }
