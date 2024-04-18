@@ -24,11 +24,12 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<APIResponse<List<Category>>> findAllCategories(){
-        List<Category> allAttendees = categoryService.findAllCategories();
+    public ResponseEntity<APIResponse<List<Category>>> findAllCategories(@RequestParam(defaultValue = "1") Integer offset, @RequestParam(defaultValue = "3") Integer limit){
+
+        List<Category> allAttendees = categoryService.findAllCategories(offset, limit);
         APIResponse<List<Category>> response = new APIResponse<>(
                 "Find all Categories successfully.",
-                categoryService.findAllCategories(),
+                categoryService.findAllCategories(offset, limit),
                 HttpStatus.OK,
                 LocalDateTime.now()
         );

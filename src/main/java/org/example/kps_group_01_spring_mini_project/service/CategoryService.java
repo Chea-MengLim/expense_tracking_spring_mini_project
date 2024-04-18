@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface CategoryService {
 
-    List<Category> findAllCategories();
+    List<Category> findAllCategories(Integer offset, Integer limit);
 
     Category findCategoryById(String id);
 
