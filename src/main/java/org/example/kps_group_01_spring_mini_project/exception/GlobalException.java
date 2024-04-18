@@ -14,7 +14,7 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalException {
     @ExceptionHandler(NotFoundException.class)
-    public ProblemDetail handleNotFoundException(NotFoundException ex){
+    public ProblemDetail handleNotFoundException(NotFoundException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
                 HttpStatus.NOT_FOUND,
                 ex.getMessage()
@@ -25,7 +25,7 @@ public class GlobalException {
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ProblemDetail handleBadRequestException(BadRequestException ex){
+    public ProblemDetail handleBadRequestException(BadRequestException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
                 HttpStatus.BAD_REQUEST,
                 ex.getMessage()
@@ -36,25 +36,26 @@ public class GlobalException {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ProblemDetail handleMethodArgumentNotValidException(MethodArgumentNotValidException ex){
+    public ProblemDetail handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
 
-        ex.getBindingResult().getFieldErrors().forEach(fieldError -> errors.put(fieldError.getField(), fieldError.getDefaultMessage()));
+        for (var fieldError: ex.getBindingResult().getFieldErrors()) {
+            errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }
 
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         problemDetail.setTitle("Bad Request");
-
         problemDetail.setProperty("Errors", errors);
         return problemDetail;
     }
 
     @ExceptionHandler(HandlerMethodValidationException.class)
-    public ProblemDetail handlerMethodValidationException(HandlerMethodValidationException ex){
+    public ProblemDetail handleMethodValidationException(HandlerMethodValidationException ex) {
         Map<String, String> errors = new HashMap<>();
 
-        for (var parameterError : ex.getAllValidationResults()){
+        for (var parameterError: ex.getAllValidationResults()) {
             String parameterName = parameterError.getMethodParameter().getParameterName();
-            for (var error : parameterError.getResolvableErrors()){
+            for (var error: parameterError.getResolvableErrors()) {
                 errors.put(parameterName, error.getDefaultMessage());
             }
         }
