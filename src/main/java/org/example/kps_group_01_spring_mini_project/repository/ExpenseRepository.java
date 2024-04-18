@@ -2,7 +2,7 @@ package org.example.kps_group_01_spring_mini_project.repository;
 
 import org.apache.ibatis.annotations.*;
 import org.example.kps_group_01_spring_mini_project.model.Expense;
-import org.example.kps_group_01_spring_mini_project.model.dto.request.ExpenseRequest;
+import org.example.kps_group_01_spring_mini_project.model.request.ExpenseRequest;
 
 import java.util.List;
 
@@ -33,8 +33,6 @@ public interface ExpenseRepository {
     @ResultMap("expensesMapper")
     Expense updateExpense(String id, @Param("expense") ExpenseRequest expenseRequest);
 
-    @Delete("DELETE FROM expenses WHERE expense_id = #{id}::uuid")
+    @Select("DELETE FROM expenses WHERE expense_id = #{id}::uuid RETURNING *")
     Expense deleteExpense(String id);
-}
-
 }

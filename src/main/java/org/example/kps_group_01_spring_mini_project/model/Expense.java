@@ -4,16 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Expense {
     private String expense_id;
-    private Integer amount;
+    private String amount;
     private String description;
-    private LocalDateTime date;
+    private String date;
     private String user_id;
-    private String category_id;
+    private Category category;
 }

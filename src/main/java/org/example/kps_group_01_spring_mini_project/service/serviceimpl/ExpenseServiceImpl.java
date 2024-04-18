@@ -1,6 +1,7 @@
 package org.example.kps_group_01_spring_mini_project.service.serviceimpl;
 
 import lombok.AllArgsConstructor;
+import org.example.kps_group_01_spring_mini_project.exception.NotFoundException;
 import org.example.kps_group_01_spring_mini_project.model.Expense;
 import org.example.kps_group_01_spring_mini_project.model.request.ExpenseRequest;
 import org.example.kps_group_01_spring_mini_project.repository.ExpenseRepository;
@@ -22,18 +23,12 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public Expense getExpenseById(Integer id) {
-        return expenseRepository.getExpenseById(id);
-    }
-
-    @Override
-    public Expense updateExpense(Integer id, ExpenseRequest expenseRequest) {
-        return expenseRepository.updateExpense(id, expenseRequest);
-    }
-
-    @Override
-    public Expense deleteExpense(Integer id) {
-        return expenseRepository.deleteExpense(id);
+    public Expense getExpenseById(String id) {
+        Expense expense = expenseRepository.getExpenseById(id);
+        if(expense == null) {
+            throw new NotFoundException("The expense id " + id + "  has not been founded.");
+        }
+        return modelMapper.map(expense,Expense.class);
     }
 
     @Override
@@ -41,5 +36,17 @@ public class ExpenseServiceImpl implements ExpenseService {
         return expenseRepository.createExpense(expenseRequest);
     }
 
+    @Override
+    public Expense updateExpense(String id, ExpenseRequest expenseRequest) {
+        return expenseRepository.updateExpense(id, expenseRequest);
+    }
 
+    @Override
+    public Expense deleteExpense(String id) {
+        Expense expense = expenseRepository.deleteExpense(id);
+        if(expense == null) {
+            throw new NotFoundException("The expense id " + id + "  has not been founded.");
+        }
+        return modelMapper.map(expense,Expense.class);
+    }
 }
