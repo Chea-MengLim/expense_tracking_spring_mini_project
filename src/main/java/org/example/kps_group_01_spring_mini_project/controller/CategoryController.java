@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.kps_group_01_spring_mini_project.model.Category;
-import org.example.kps_group_01_spring_mini_project.model.response.APIResponse;
+import org.example.kps_group_01_spring_mini_project.model.dto.response.APIResponse;
 import org.example.kps_group_01_spring_mini_project.model.dto.request.CategoryRequest;
 import org.example.kps_group_01_spring_mini_project.service.CategoryService;
 import org.springframework.http.HttpStatus;

@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import org.example.kps_group_01_spring_mini_project.model.Expense;
 import org.example.kps_group_01_spring_mini_project.model.User;
 import org.example.kps_group_01_spring_mini_project.model.constant.SortBy;
-import org.example.kps_group_01_spring_mini_project.model.response.APIResponse;
+import org.example.kps_group_01_spring_mini_project.model.dto.response.APIResponse;
 import org.example.kps_group_01_spring_mini_project.model.dto.request.ExpenseRequest;
 import org.example.kps_group_01_spring_mini_project.service.ExpenseService;
 import org.example.kps_group_01_spring_mini_project.service.UserService;

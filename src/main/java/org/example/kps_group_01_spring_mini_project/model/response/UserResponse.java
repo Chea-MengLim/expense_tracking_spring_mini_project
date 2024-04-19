@@ -10,5 +10,4 @@ public class UserResponse {
     private String userId;
     private String email;
     private String profileImage;
-
 }

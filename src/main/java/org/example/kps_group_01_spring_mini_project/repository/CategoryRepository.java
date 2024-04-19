@@ -1,14 +1,11 @@
 package org.example.kps_group_01_spring_mini_project.repository;
 
 import org.apache.ibatis.annotations.*;
-import org.apache.ibatis.type.MappedTypes;
 import org.example.kps_group_01_spring_mini_project.model.Category;
-import org.example.kps_group_01_spring_mini_project.model.User;
 import org.example.kps_group_01_spring_mini_project.model.dto.request.CategoryRequest;
-import org.example.kps_group_01_spring_mini_project.model.response.CategoryResponse;
+import org.example.kps_group_01_spring_mini_project.model.dto.response.CategoryResponse;
 
 import java.util.List;
-import java.util.UUID;
 
 @Mapper
 public interface CategoryRepository {

@@ -1,4 +1,4 @@
-package org.example.kps_group_01_spring_mini_project.model.response;
+package org.example.kps_group_01_spring_mini_project.model.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
