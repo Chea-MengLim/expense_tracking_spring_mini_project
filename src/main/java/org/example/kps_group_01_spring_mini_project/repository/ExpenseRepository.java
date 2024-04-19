@@ -32,6 +32,6 @@ public interface ExpenseRepository {
     @ResultMap("expensesMapper")
     Expense updateExpense(String id, @Param("expense") ExpenseRequest expenseRequest);
 
-    @Select("DELETE FROM expenses WHERE expense_id = #{id}::uuid RETURNING *")
-    Expense deleteExpense(String id);
+    @Select("DELETE FROM expenses WHERE expense_id = #{id}::uuid")
+    void deleteExpense(String id);
 }

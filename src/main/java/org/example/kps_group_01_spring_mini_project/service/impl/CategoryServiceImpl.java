@@ -45,11 +45,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category register(CategoryRequest categoryRequest) {
         String userId = getUserIdOfCurrentUser();
-        if (categoryRequest.getName().isBlank()){
-            throw new BadRequestException("Category's name is blank...");
-        } else if (categoryRequest.getDescription().isBlank()) {
-            throw new BadRequestException("Category's description is blank...");
-        }
+//        if (categoryRequest.getName().isBlank()){
+//            throw new BadRequestException("Category's name is blank...");
+//        } else if (categoryRequest.getDescription().isBlank()) {
+//            throw new BadRequestException("Category's description is blank...");
+//        }
         return categoryRepository.register(categoryRequest, userId);
     }
 

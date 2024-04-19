@@ -55,7 +55,7 @@ public class ExpenseController {
     }
 
     @PostMapping
-    public ResponseEntity<APIResponse<Expense>> createExpense(@RequestBody ExpenseRequest expenseRequest){
+    public ResponseEntity<APIResponse<Expense>> createExpense(@RequestBody @Valid ExpenseRequest expenseRequest){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String userEmail = userDetails.getUsername();
@@ -82,8 +82,8 @@ public class ExpenseController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<APIResponse<Expense>> deleteExpense(@PathVariable String id){
-        Expense expense = expenseService.deleteExpense(id);
+    public ResponseEntity<?> deleteExpense(@PathVariable String id){
+        expenseService.deleteExpense(id);
         APIResponse<Expense> response = APIResponse.<Expense>builder()
                 .message("The expense has been successfully deleted.")
                 .status(HttpStatus.OK)

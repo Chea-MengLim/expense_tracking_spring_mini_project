@@ -37,7 +37,7 @@ public class FileServiceImpl implements FileService {
                 Files.copy(file.getInputStream(), path.resolve(fileName));
                 break;
             default:
-               throw new BadRequestException("File must be contain ");
+               throw new BadRequestException("File must be contain extension .png, .jpg, .jpeg, .bmp");
 
         }
         return fileName;
@@ -45,7 +45,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public ByteArrayResource getFileByFileName(String fileName) throws IOException {
         if (!fileName.endsWith(".jpg") && !fileName.endsWith(".jpeg") && !fileName.endsWith(".png")){
-            throw new BadRequestException("File must be contain jpg, png, jpeg");
+            throw new BadRequestException("File must be contain jpg, png, jpeg, bmp");
         }
         //get file path
         Path path = Paths.get("src/main/resources/files/" + fileName);

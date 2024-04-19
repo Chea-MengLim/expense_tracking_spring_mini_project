@@ -1,9 +1,12 @@
 package org.example.kps_group_01_spring_mini_project.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.example.kps_group_01_spring_mini_project.exception.BadRequestException;
 import org.example.kps_group_01_spring_mini_project.exception.NotFoundException;
+import org.example.kps_group_01_spring_mini_project.model.Category;
 import org.example.kps_group_01_spring_mini_project.model.Expense;
 import org.example.kps_group_01_spring_mini_project.model.dto.request.ExpenseRequest;
+import org.example.kps_group_01_spring_mini_project.repository.CategoryRepository;
 import org.example.kps_group_01_spring_mini_project.repository.ExpenseRepository;
 import org.example.kps_group_01_spring_mini_project.service.ExpenseService;
 import org.modelmapper.ModelMapper;
@@ -17,6 +20,7 @@ import java.util.UUID;
 public class ExpenseServiceImpl implements ExpenseService {
     private final ExpenseRepository expenseRepository;
     private final ModelMapper modelMapper;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public List<Expense> getAllExpenses(Integer offset, Integer limit, String sortBy, boolean orderBy) {
@@ -47,6 +51,17 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public Expense createExpense(ExpenseRequest expenseRequest, UUID userId) {
+        String id = expenseRequest.getCategory_id();
+        Category category = null;
+        try{
+            category = categoryRepository.findCategoryById(id);
+        }catch (Exception ignore){
+
+        }
+        if(category == null)
+            throw new NotFoundException("Find category with id "+ id + " is not found.");
+        if(expenseRequest.getDate() == null)
+            throw new BadRequestException("date cannot be black!");
         return expenseRepository.createExpense(expenseRequest, userId);
     }
 
@@ -61,11 +76,21 @@ public class ExpenseServiceImpl implements ExpenseService {
         if(expense == null) {
             throw new NotFoundException("The expense id " + id + "  has not been founded.");
         }
+
+        Category category = null;
+        String catId = expenseRequest.getCategory_id();
+        try{
+            category = categoryRepository.findCategoryById(catId);
+        }catch (Exception ignore){
+
+        }
+        if(category == null)
+            throw new NotFoundException("Find category with id "+ catId + " is not found.");
         return expenseRepository.updateExpense(id, expenseRequest);
     }
 
     @Override
-    public Expense deleteExpense(String id) {
+    public void deleteExpense(String id) {
         Expense expense = null;
         try{
             expense = expenseRepository.getExpenseById(id);
@@ -75,7 +100,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         if(expense == null) {
             throw new NotFoundException("The expense id " + id + "  has not been founded.");
         }
-        return modelMapper.map(expense,Expense.class);
+        expenseRepository.deleteExpense(id);
     }
 
 }

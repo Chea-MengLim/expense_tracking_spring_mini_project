@@ -60,13 +60,28 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public Category updateCategory(@RequestBody CategoryRequest categoryRequest, @PathVariable String id){
-        return categoryService.updateCategory(categoryRequest, id);
+    public ResponseEntity<APIResponse<Category>> updateCategory(@RequestBody @Valid CategoryRequest categoryRequest, @PathVariable String id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new APIResponse<>(
+                        "Update Category successfully.",
+                        categoryService.updateCategory(categoryRequest, id),
+                        HttpStatus.OK,
+                        LocalDateTime.now()
+                )
+        );
     }
 
     @DeleteMapping("/{id}")
-    public String deleteCategory(@PathVariable String id){
-        return categoryService.deleteCategory(id);
+    public ResponseEntity<?> deleteCategory(@PathVariable String id){
+        String message = categoryService.deleteCategory(id);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new APIResponse<>(
+                        message,
+                        null,
+                        HttpStatus.OK,
+                        LocalDateTime.now()
+                )
+        );
     }
 
 }

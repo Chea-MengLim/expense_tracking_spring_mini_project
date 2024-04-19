@@ -41,8 +41,9 @@ public interface CategoryRepository {
     Category register(@Param("cate") CategoryRequest categoryRequest, String userId);
 
     @Select("""
-            UPDATE categories SET name = #{cate.name}, description = #{cate.description}, user_id = #{cate.userId}::uuid WHERE category_id = #{id}::uuid
-            """)
+            UPDATE categories SET name = #{cate.name}, description = #{cate.description} WHERE category_id = #{id}::uuid RETURNING *
+    """)
+    @ResultMap("cateMapper")
     Category updateCategory(@Param("cate") CategoryRequest categoryRequest, String id);
 
 
