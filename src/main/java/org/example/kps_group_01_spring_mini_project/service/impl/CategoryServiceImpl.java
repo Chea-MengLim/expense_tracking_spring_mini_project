@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import org.example.kps_group_01_spring_mini_project.exception.BadRequestException;
 import org.example.kps_group_01_spring_mini_project.exception.NotFoundException;
 import org.example.kps_group_01_spring_mini_project.model.Category;
+import org.example.kps_group_01_spring_mini_project.model.User;
 import org.example.kps_group_01_spring_mini_project.model.dto.request.CategoryRequest;
 import org.example.kps_group_01_spring_mini_project.repository.CategoryRepository;
 import org.example.kps_group_01_spring_mini_project.service.CategoryService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,18 +31,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category findCategoryById(String id) {
-        if (id == null || id.isEmpty()) {
-            throw new BadRequestException("Invalid category id.");
-        }
-        Category category;
+        Category category = null;
         try{
             category = categoryRepository.findCategoryById(id);
-            if(category == null){
-                throw new NotFoundException("Find category with id "+ id + " is not found.");
-            }
-        }catch (NotFoundException e){
-            throw e;
+        }catch (Exception ignore){
+
         }
+        if(category == null)
+            throw new NotFoundException("Find category with id "+ id + " is not found.");
         return category;
     }
 
@@ -51,19 +49,33 @@ public class CategoryServiceImpl implements CategoryService {
             throw new BadRequestException("Category's name is blank...");
         } else if (categoryRequest.getDescription().isBlank()) {
             throw new BadRequestException("Category's description is blank...");
-        } else if (categoryRequest.getUserId().isBlank()) {
-            throw new BadRequestException("User id is blank...");
         }
         return categoryRepository.register(categoryRequest, userId);
     }
 
     @Override
     public Category updateCategory(CategoryRequest categoryRequest, String id) {
+        Category category = null;
+        try{
+            category = categoryRepository.findCategoryById(id);
+        }catch (Exception ignore){
+
+        }
+        if(category == null)
+            throw new NotFoundException("Find category with id "+ id + " is not found.");
         return categoryRepository.updateCategory(categoryRequest, id);
     }
 
     @Override
     public String deleteCategory(String id) {
+        Category category = null;
+        try{
+            category = categoryRepository.findCategoryById(id);
+        }catch (Exception ignore){
+
+        }
+        if(category == null)
+            throw new NotFoundException("Find category with id "+ id + " is not found.");
         Boolean isDelete = categoryRepository.deleteCategory(id);
         if (isDelete){
             return "Remove Category successfully.";

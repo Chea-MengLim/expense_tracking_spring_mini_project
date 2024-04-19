@@ -6,6 +6,7 @@ import org.example.kps_group_01_spring_mini_project.model.Otp;
 import org.example.kps_group_01_spring_mini_project.model.dto.request.ForgetPasswordRequest;
 import org.example.kps_group_01_spring_mini_project.model.dto.request.UserRequest;
 import org.example.kps_group_01_spring_mini_project.model.User;
+import org.example.kps_group_01_spring_mini_project.model.dto.response.UserResponse;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -73,4 +74,10 @@ public interface UserRepository {
         UPDATE users SET password = #{user.password} WHERE email = #{email}
     """))
     void updatePassword(String email, @Param("user") ForgetPasswordRequest forgetPasswordRequest);
+
+    @Select("""
+        SELECT user_id, email, profile_image FROM users WHERE user_id = #{userId}::uuid
+        """)
+    @ResultMap("userMap")
+    User findUserByUserId(String userId);
 }

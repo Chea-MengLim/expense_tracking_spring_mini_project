@@ -29,6 +29,7 @@ public class FileServiceImpl implements FileService {
             case "image/png":
             case "image/jpg":
             case "image/jpeg":
+            case "image/bmp":
                 fileName = UUID.randomUUID() + "." + StringUtils.getFilenameExtension(fileName);
                 if (!Files.exists(path)) {
                     Files.createDirectories(path);

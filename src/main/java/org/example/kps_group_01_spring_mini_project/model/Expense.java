@@ -3,6 +3,7 @@ package org.example.kps_group_01_spring_mini_project.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.kps_group_01_spring_mini_project.model.response.CategoryResponse;
 
 @Data
 @AllArgsConstructor
@@ -12,6 +13,6 @@ public class Expense {
     private String amount;
     private String description;
     private String date;
-    private String user_id;
-    private Category category;
+    private User user;
+    private CategoryResponse categoryResponse;
 }

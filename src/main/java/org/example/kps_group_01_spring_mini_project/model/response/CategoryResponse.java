@@ -1,4 +1,4 @@
-package org.example.kps_group_01_spring_mini_project.model;
+package org.example.kps_group_01_spring_mini_project.model.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -9,11 +9,8 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-public class Category {
+public class CategoryResponse {
     private String categoryId;
     private String name;
     private String description;
-    private User user;
 }
